@@ -8,6 +8,9 @@ import guru.springframework.spring5webapp.repositories.BookRepository;
 import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by jt on 12/23/19.
@@ -26,6 +29,7 @@ public class BootStrapData implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
 
         System.out.println("Started in Bootstrap");
@@ -40,15 +44,30 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Publisher Count: " + publisherRepository.count());
 
         Author eric = new Author("Eric", "Evans");
+        Author john = new Author("john", "tom");
         Book ddd = new Book("Domain Driven Design", "123123");
+        Book springSecurity = new Book("Spring Security", "456456");
         eric.getBooks().add(ddd);
+
         ddd.getAuthors().add(eric);
 
         ddd.setPublisher(publisher);
+
         publisher.getBooks().add(ddd);
 
+
         authorRepository.save(eric);
+
         bookRepository.save(ddd);
+        bookRepository.save(springSecurity);
+        publisherRepository.save(publisher);
+
+
+        eric.getBooks().add(springSecurity);
+        springSecurity.getAuthors().add(eric);
+        springSecurity.setPublisher(publisher);
+        publisher.getBooks().add(springSecurity);
+        bookRepository.save(springSecurity);
         publisherRepository.save(publisher);
 
         Author rod = new Author("Rod", "Johnson");
@@ -65,5 +84,8 @@ public class BootStrapData implements CommandLineRunner {
 
         System.out.println("Number of Books: " + bookRepository.count());
         System.out.println("Publisher Number of Books: " + publisher.getBooks().size());
+         publisher.getBooks().stream().forEach(book -> {System.out.println(book.getTitle());});
+        List<Author> list = (List<Author>) authorRepository.findAll();
+        System.out.println("Erick books: " +  list.stream().findFirst().get().getBooks());
     }
 }

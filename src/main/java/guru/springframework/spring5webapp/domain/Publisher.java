@@ -1,5 +1,7 @@
 package guru.springframework.spring5webapp.domain;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +10,7 @@ import java.util.Set;
  * Created by jt on 12/23/19.
  */
 @Entity
+@EqualsAndHashCode(exclude="books")
 public class Publisher {
 
     @Id
@@ -21,7 +24,7 @@ public class Publisher {
     private String zip;
 
     @OneToMany
-    @JoinColumn(name = "publisher_id")
+    //@JoinColumn(name = "publisher_id")
     private Set<Book> books = new HashSet<>();
 
     public Publisher() {
@@ -47,7 +50,7 @@ public class Publisher {
                 '}';
     }
 
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -61,7 +64,7 @@ public class Publisher {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
+    */
     public Long getId() {
         return id;
     }

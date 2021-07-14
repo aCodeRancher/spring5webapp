@@ -18,6 +18,7 @@ public class Book {
     private String isbn;
 
     @ManyToOne
+    //@JoinColumn(name = "pub_id")
     private Publisher publisher;
 
     @ManyToMany
@@ -79,11 +80,10 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
-                '}';
+                 '}';
     }
 
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -97,4 +97,6 @@ public class Book {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    */
 }

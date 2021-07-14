@@ -1,5 +1,8 @@
 package guru.springframework.spring5webapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +11,7 @@ import java.util.Set;
  * Created by jt on 12/22/19.
  */
 @Entity
+@EqualsAndHashCode(exclude="books")
 public class Author {
 
     @Id
@@ -18,7 +22,7 @@ public class Author {
     private String lastName;
 
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
+   private Set<Book> books = new HashSet<>();
 
     public Author() {
     }
@@ -60,17 +64,17 @@ public class Author {
         this.books = books;
     }
 
-    @Override
+  @Override
     public String toString() {
         return "Author{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", books=" + books +
-                '}';
+                ", lastName='" + lastName + '\''  +
+                ",  books='"   + books + '\'' +
+                 '}';
     }
 
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -83,5 +87,5 @@ public class Author {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
+    } */
 }
